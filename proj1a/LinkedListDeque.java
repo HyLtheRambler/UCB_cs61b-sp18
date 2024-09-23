@@ -10,7 +10,7 @@ public class LinkedListDeque<T> {
 		}
 	}
 	private ListNode<T> sentinel;
-	public int size;
+	private int size;
 
 	/*  Creates an empty linked list deque. */
     public LinkedListDeque() {
@@ -20,6 +20,7 @@ public class LinkedListDeque<T> {
 		size = 0;
     }
 	/*  Creates a deep copy of other. */
+	/*
     public LinkedListDeque(LinkedListDeque<T> other) {
 		ListNode<T> otherPtr = other.sentinel;
 		this.sentinel = new ListNode<>(null, null, null);
@@ -34,6 +35,7 @@ public class LinkedListDeque<T> {
 		this.size = other.size;
 		thisPtr.next = sentinel;
     }
+	 */
 
 	/*  Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
@@ -55,7 +57,7 @@ public class LinkedListDeque<T> {
     }
 	/*  Returns the number of items in the deque. */
     public int size() {
-	return size;
+		return size;
     }
 	/*  Prints the items in the deque from first to last, separated by a space.
 	Once all the items have been printed, print out a new line. */
@@ -117,4 +119,3 @@ public class LinkedListDeque<T> {
 		return recursionHelper(index, curPtr.next);
     }
 }
-

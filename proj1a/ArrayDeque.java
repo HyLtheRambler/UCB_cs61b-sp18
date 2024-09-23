@@ -13,13 +13,13 @@ public class ArrayDeque<T> {
     private int end;
 
     /* helper function for computing the next value of end after insertion */
-    private int next(int end) {
-        return (end + 1) % size;
+    private int next(int ptr) {
+        return (ptr + 1) % size;
     }
 
     /* helper function for computing the prev value of head after insertion */
-    private int prev(int head) {
-        return (head - 1) % size;
+    private int prev(int ptr) {
+        return (ptr - 1) % size;
     }
 
     /* Resizing array if head == end */
@@ -110,7 +110,8 @@ public class ArrayDeque<T> {
     public int size() {
         return eleSize;
     }
-    /*  Prints the items in the deque from first to last, separated by a space. Once all the items have been
+    /*  Prints the items in the deque from first to last,
+    separated by a space. Once all the items have been
     printed, print out a new line. */
     public void printDeque() {
         int ptr = head;
@@ -120,7 +121,8 @@ public class ArrayDeque<T> {
         }
         System.out.print('\n');
     }
-    /*  Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+    /*  Removes and returns the item at the front of the deque.
+     If no such item exists, returns null. */
     public T removeFirst() {
         T elem = array[head];
         head = next(head);
@@ -130,7 +132,8 @@ public class ArrayDeque<T> {
         }
         return elem;
     }
-    /*  Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+    /*  Removes and returns the item at the back of the deque.
+     If no such item exists, returns null. */
     public T removeLast() {
         T elem = array[prev(end)];
         end = prev(end);
