@@ -1,5 +1,5 @@
 /** Performs some basic linked list tests. */
-public class LinkedListDequeTest {
+public class ArrayDequeTest {
 	
 	/* Utility method for printing out empty checks. */
 	public static boolean checkEmpty(boolean expected, boolean actual) {
@@ -29,24 +29,13 @@ public class LinkedListDequeTest {
 		}
 	}
 
-	public static void checkRecursive () {
-		System.out.println(("Running checkRecursiveGet test."));
-		boolean passed = true;
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-		lld1.addLast(0);
-		lld1.removeLast();
-		lld1.addLast(2);
-		passed = checkSize(lld1.getRecursive(0), 2);
-		printTestStatus(passed);
-	}
-
 	/** Adds a few things to the list, checking isEmpty() and size() are correct, 
 	  * finally printing the results. 
 	  *
 	  * && is the "and" operation. */
 	public static void addIsEmptySizeTest() {
 		System.out.println("Running add/isEmpty/Size test.");
-		LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+		ArrayDeque<String> lld1 = new ArrayDeque<>();
 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -74,7 +63,7 @@ public class LinkedListDequeTest {
 
 		System.out.println("Running add/remove test.");
 
-		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
 		// should be empty 
 		boolean passed = checkEmpty(true, lld1.isEmpty());
 
@@ -89,10 +78,31 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 	}
 
+	/** Adds elems through 1 to N-1 then checks all of them */
+	public static void addInsertTest() {
+		ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+		System.out.println("Running add/insert test.");
+		boolean passed = checkEmpty(true, lld1.isEmpty());
+		for (int i = 0; i < 15; ++i) {
+			lld1.addLast(i);
+		}
+		for (int i = 0; i < 15; ++i) {
+			System.out.printf("%d", lld1.get(i));
+			if (!checkSize(i, lld1.get(i))) {
+				passed = false;
+				break;
+			}
+		}
+
+		lld1.printDeque();
+		printTestStatus(passed);
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
 		addIsEmptySizeTest();
 		addRemoveTest();
-		checkRecursive();
+		addInsertTest();
 	}
 } 
+
