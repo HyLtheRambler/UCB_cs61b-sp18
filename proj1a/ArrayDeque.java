@@ -149,12 +149,4 @@ public class ArrayDeque<T> {
         return array[head + index];
     }
 
-    /* Same as get, but uses recursion. */
-    public T getRecursive(int index) {
-        if (index < 0 || index > eleSize - 1) {
-            return null;
-        }
-        return array[head + index];
-    }
-
 }
