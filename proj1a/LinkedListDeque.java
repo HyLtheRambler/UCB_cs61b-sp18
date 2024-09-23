@@ -1,8 +1,8 @@
 public class LinkedListDeque<T> {
 	private static class ListNode<T> {
-		public ListNode<T> prev;
-		public T value;
-		public ListNode<T> next;
+		private ListNode<T> prev;
+		private T value;
+		private ListNode<T> next;
 		public ListNode(ListNode<T> p, T val, ListNode<T> n) {
 			prev = p;
 			next = n;
@@ -21,32 +21,32 @@ public class LinkedListDeque<T> {
     }
 	/*  Creates a deep copy of other. */
     public LinkedListDeque(LinkedListDeque<T> other) {
-		ListNode<T> other_ptr = other.sentinel;
+		ListNode<T> otherPtr = other.sentinel;
 		this.sentinel = new ListNode<>(null, null, null);
-		ListNode<T> this_ptr = sentinel;
+		ListNode<T> thisPtr = sentinel;
 		this.sentinel.prev = sentinel;
 		this.sentinel.next = sentinel;
-		while (other_ptr.next != other.sentinel) {
-			this_ptr.next = new ListNode<>(this_ptr, other_ptr.next.value, null);
-			this_ptr = this_ptr.next;
-			other_ptr = other_ptr.next;
+		while (otherPtr.next != other.sentinel) {
+			thisPtr.next = new ListNode<>(thisPtr, otherPtr.next.value, null);
+			thisPtr = thisPtr.next;
+			otherPtr = otherPtr.next;
 		}
 		this.size = other.size;
-		this_ptr.next = sentinel;
+		thisPtr.next = sentinel;
     }
 
 	/*  Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-		ListNode<T> to_add = new ListNode<>(this.sentinel, item, this.sentinel.next);
-		this.sentinel.next.prev = to_add;
-		this.sentinel.next = to_add;
+		ListNode<T> toAdd = new ListNode<>(this.sentinel, item, this.sentinel.next);
+		this.sentinel.next.prev = toAdd;
+		this.sentinel.next = toAdd;
 		size++;
     }
 	/*  Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-		ListNode<T> to_add = new ListNode<>(sentinel.prev, item, sentinel);
-		sentinel.prev.next = to_add;
-		sentinel.prev = to_add;
+		ListNode<T> toAdd = new ListNode<>(sentinel.prev, item, sentinel);
+		sentinel.prev.next = toAdd;
+		sentinel.prev = toAdd;
 		size++;
     }
 	/*  Returns true if deque is empty, false otherwise. */
@@ -57,15 +57,16 @@ public class LinkedListDeque<T> {
     public int size() {
 	return size;
     }
-	/*  Prints the items in the deque from first to last, separated by a space. Once all the items have been printed, print out a new line. */
+	/*  Prints the items in the deque from first to last, separated by a space.
+	Once all the items have been printed, print out a new line. */
     public void printDeque() {
-	ListNode<T> ptr = this.sentinel;
-	while (ptr.next != sentinel) {
-	    System.out.print(ptr.next.value);
-	    System.out.print(" ");
-	    ptr = ptr.next;
-	}
-	System.out.print("\n");
+		ListNode<T> ptr = this.sentinel;
+		while (ptr.next != sentinel) {
+			System.out.print(ptr.next.value);
+			System.out.print(" ");
+			ptr = ptr.next;
+		}
+		System.out.print("\n");
     }
 	/*  Removes and returns the item at the front of the deque. If no such item exists, returns null. */
     public T removeFirst() {
@@ -83,18 +84,19 @@ public class LinkedListDeque<T> {
 		size--;
 		return elem;
     }
-	/*  Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque! */
+	/*  Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
+	 If no such item exists, returns null. Must not alter the deque! */
     public T get(int index) {
 		ListNode<T> ptr = this.sentinel.next;
-		int cur_i = 0;
+		int curI = 0;
 		if (index < 0 || index > size - 1) {
 			return null;
 		}
-		while (ptr != sentinel && cur_i < index) {
-			cur_i++;
+		while (ptr != sentinel && curI < index) {
+			curI++;
 			ptr = ptr.next;
 		}
-		if (cur_i != index) {
+		if (curI != index) {
 			return null;
 		}
 		return ptr.value;
@@ -102,17 +104,17 @@ public class LinkedListDeque<T> {
     
 	/* Same as get, but uses recursion. */
     public T getRecursive(int index) {
-	ListNode<T> cur_ptr = sentinel.next;
-	return recursionHelper(index, cur_ptr);
+		ListNode<T> curPtr = sentinel.next;
+		return recursionHelper(index, curPtr);
     }
 
 	/* Helper function for getRecursive() */
-    private T recursionHelper(int index, ListNode<T> cur_ptr) {
-	if (cur_ptr == sentinel) {
-	    return null;
-	}
-	index--;
-	return recursionHelper(index, cur_ptr.next);
+    private T recursionHelper(int index, ListNode<T> curPtr) {
+		if (curPtr == sentinel) {
+			return null;
+		}
+		index--;
+		return recursionHelper(index, curPtr.next);
     }
 }
 

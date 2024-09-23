@@ -6,9 +6,9 @@ public class ArrayDeque<T> {
     * copy elements from end to size of the original array to the end of new array,
     * and the head, depending on whether head
     * */
-    T[] array;
+    private T[] array;
     private int size;
-    private int ele_size;
+    private int eleSize;
     private int head;
     private int end;
 
@@ -25,39 +25,39 @@ public class ArrayDeque<T> {
     /* Resizing array if head == end */
     private void resizeArray() {
         int ptr = head;
-        /* Shrink oversized array. ele_size remains the same */
-        if (size >= 16 && ele_size < (size / 4)) {
-            if (ele_size <= 15) {
-                int new_size = 15;
-                T[] new_array = (T[]) new Object[new_size];
+        /* Shrink oversized array. eleSize remains the same */
+        if (size >= 16 && eleSize < (size / 4)) {
+            if (eleSize <= 15) {
+                int newSize = 15;
+                T[] newArray = (T[]) new Object[newSize];
                 for (; ptr != end; ptr = next(ptr)) {
-                    new_array[(ptr - head) % 15] = array[ptr];
+                    newArray[(ptr - head) % 15] = array[ptr];
                 }
-                array = new_array;
+                array = newArray;
                 head = 0;
-                size = new_size;
-                end = ele_size % 15;
+                size = newSize;
+                end = eleSize % 15;
             } else {
-                int new_size = size / 2;
-                T[] new_array = (T[]) new Object[size / 2];
+                int newSize = size / 2;
+                T[] newArray = (T[]) new Object[size / 2];
                 for (; ptr != end; ptr = next(ptr)) {
-                    new_array[(ptr - head) % new_size] = array[ptr];
+                    newArray[(ptr - head) % newSize] = array[ptr];
                 }
                 head = 0;
-                end = ele_size;
-                size = new_size;
-                array = new_array;
+                end = eleSize;
+                size = newSize;
+                array = newArray;
             }
         } else { /* allocate more space for array */
-            int new_size = size * 2;
-            T[] new_array = (T[]) new Object[new_size];
+            int newSize = size * 2;
+            T[] newArray = (T[]) new Object[newSize];
             for (; ptr != end; ptr = next(ptr)) {
-                new_array[(ptr - head) % new_size] = array[ptr];
+                newArray[(ptr - head) % newSize] = array[ptr];
             }
             head = 0;
-            end = ele_size;
-            array = new_array;
-            size = new_size;
+            end = eleSize;
+            array = newArray;
+            size = newSize;
         }
     }
 
@@ -65,14 +65,15 @@ public class ArrayDeque<T> {
     public ArrayDeque() {
         size = 15;
         array = (T[]) new Object[size];
-        ele_size = 0;
+        eleSize = 0;
         head = 0;
         end = 1;
     }
     /*  Creates a deep copy of other. */
-    public ArrayDeque(ArrayDeque<T> other) {
+    /*
+        public ArrayDeque(ArrayDeque<T> other) {
         size = other.size;
-        ele_size = other.ele_size;
+        eleSize = other.eleSize;
         head = other.head;
         end = other.end;
         int ptr = head;
@@ -81,6 +82,7 @@ public class ArrayDeque<T> {
             array[ptr] = other.array[ptr];
         }
     }
+     */
 
     /*  Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
@@ -89,7 +91,7 @@ public class ArrayDeque<T> {
         }
         head = prev(head);
         array[head] = item;
-        ele_size++;
+        eleSize++;
     }
     /*  Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
@@ -98,17 +100,18 @@ public class ArrayDeque<T> {
         }
         array[end] = item;
         end = next(end);
-        ele_size++;
+        eleSize++;
     }
     /*  Returns true if deque is empty, false otherwise. */
     public boolean isEmpty() {
-        return ele_size == 0;
+        return eleSize == 0;
     }
     /*  Returns the number of items in the deque. */
     public int size() {
-        return ele_size;
+        return eleSize;
     }
-    /*  Prints the items in the deque from first to last, separated by a space. Once all the items have been printed, print out a new line. */
+    /*  Prints the items in the deque from first to last, separated by a space. Once all the items have been
+    printed, print out a new line. */
     public void printDeque() {
         int ptr = head;
         for (; ptr != end; ptr = next(ptr)) {
@@ -121,8 +124,8 @@ public class ArrayDeque<T> {
     public T removeFirst() {
         T elem = array[head];
         head = next(head);
-        ele_size--;
-        if (size >= 16 && ele_size < (size / 4)) {
+        eleSize--;
+        if (size >= 16 && eleSize < (size / 4)) {
             resizeArray();
         }
         return elem;
@@ -131,15 +134,16 @@ public class ArrayDeque<T> {
     public T removeLast() {
         T elem = array[prev(end)];
         end = prev(end);
-        ele_size--;
-        if (size >= 16 && ele_size < (size / 4)) {
+        eleSize--;
+        if (size >= 16 && eleSize < (size / 4)) {
             resizeArray();
         }
         return elem;
     }
-    /*  Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth. If no such item exists, returns null. Must not alter the deque! */
+    /*  Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
+    If no such item exists, returns null. Must not alter the deque! */
     public T get(int index) {
-        if (index < 0 || index > ele_size - 1) {
+        if (index < 0 || index > eleSize - 1) {
             return null;
         }
         return array[head + index];
@@ -147,7 +151,7 @@ public class ArrayDeque<T> {
 
     /* Same as get, but uses recursion. */
     public T getRecursive(int index) {
-        if (index < 0 || index > ele_size - 1) {
+        if (index < 0 || index > eleSize - 1) {
             return null;
         }
         return array[head + index];
