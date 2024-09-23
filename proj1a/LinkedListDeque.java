@@ -70,7 +70,8 @@ public class LinkedListDeque<T> {
 		}
 		System.out.print("\n");
     }
-	/*  Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+	/*  Removes and returns the item at the front of the deque.
+	If no such item exists, returns null. */
     public T removeFirst() {
 		T elem = sentinel.next.value;
 		sentinel.next = sentinel.next.next;
@@ -78,7 +79,8 @@ public class LinkedListDeque<T> {
 		size--;
 		return elem;
     }
-	/*  Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+	/*  Removes and returns the item at the back of the deque.
+	 If no such item exists, returns null. */
     public T removeLast() {
 		T elem = sentinel.prev.value;
 		sentinel.prev = sentinel.prev.prev;
@@ -119,3 +121,4 @@ public class LinkedListDeque<T> {
 		return recursionHelper(index, curPtr.next);
     }
 }
+
