@@ -1,7 +1,6 @@
 public class ArrayDeque<T> {
-
     /* Invariants: head should be the position of the first element,
-    * end be the next position to add the last element
+    * end be the next position to add the last element;
     * when head == end, no space for next element to add and should resize the array,
     * copy elements from end to size of the original array to the end of new array,
     * and the head, depending on whether head
@@ -19,7 +18,7 @@ public class ArrayDeque<T> {
 
     /* helper function for computing the prev value of head after insertion */
     private int prev(int ptr) {
-        return (ptr - 1) % size;
+        return (ptr - 1 + size) % size;
     }
 
     /* Resizing array if head == end */
@@ -67,26 +66,12 @@ public class ArrayDeque<T> {
         array = (T[]) new Object[size];
         eleSize = 0;
         head = 0;
-        end = 1;
+        end = 0;
     }
-    /*  Creates a deep copy of other. */
-    /*
-        public ArrayDeque(ArrayDeque<T> other) {
-        size = other.size;
-        eleSize = other.eleSize;
-        head = other.head;
-        end = other.end;
-        int ptr = head;
-        array = (T[]) new Object[size];
-        for (; ptr != end; ptr = next(ptr)) {
-            array[ptr] = other.array[ptr];
-        }
-    }
-     */
 
     /*  Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
-        if (head == end) {
+        if (eleSize == size) {
             resizeArray();
         }
         head = prev(head);
@@ -95,7 +80,7 @@ public class ArrayDeque<T> {
     }
     /*  Adds an item of type T to the back of the deque. */
     public void addLast(T item) {
-        if (head == end) {
+        if (eleSize == size) {
             resizeArray();
         }
         array[end] = item;
@@ -124,6 +109,9 @@ public class ArrayDeque<T> {
     /*  Removes and returns the item at the front of the deque.
      If no such item exists, returns null. */
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         T elem = array[head];
         head = next(head);
         eleSize--;
@@ -135,6 +123,9 @@ public class ArrayDeque<T> {
     /*  Removes and returns the item at the back of the deque.
      If no such item exists, returns null. */
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T elem = array[prev(end)];
         end = prev(end);
         eleSize--;
@@ -149,7 +140,7 @@ public class ArrayDeque<T> {
         if (index < 0 || index > eleSize - 1) {
             return null;
         }
-        return array[head + index];
+        return array[(head + index) % size];
     }
 
 }

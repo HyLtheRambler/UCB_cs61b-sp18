@@ -12,7 +12,7 @@ public class LinkedListDeque<T> {
 	private ListNode<T> sentinel;
 	private int size;
 
-	/*  Creates an empty linked list deque. */
+	/*  Creates ae empty linked list deque. */
     public LinkedListDeque() {
 		sentinel = new ListNode<>(null, null, null);
 		sentinel.prev = sentinel;
@@ -73,6 +73,9 @@ public class LinkedListDeque<T> {
 	/*  Removes and returns the item at the front of the deque.
 	If no such item exists, returns null. */
     public T removeFirst() {
+		if (size == 0) {
+			return null;
+		}
 		T elem = sentinel.next.value;
 		sentinel.next = sentinel.next.next;
 		sentinel.next.prev = sentinel;
@@ -82,6 +85,9 @@ public class LinkedListDeque<T> {
 	/*  Removes and returns the item at the back of the deque.
 	 If no such item exists, returns null. */
     public T removeLast() {
+		if (size == 0) {
+			return null;
+		}
 		T elem = sentinel.prev.value;
 		sentinel.prev = sentinel.prev.prev;
 		sentinel.prev.next = sentinel;
@@ -116,6 +122,9 @@ public class LinkedListDeque<T> {
     private T recursionHelper(int index, ListNode<T> curPtr) {
 		if (curPtr == sentinel) {
 			return null;
+		}
+		if (index == 0) {
+			return curPtr.value;
 		}
 		index--;
 		return recursionHelper(index, curPtr.next);
