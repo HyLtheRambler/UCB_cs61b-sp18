@@ -3,7 +3,7 @@ public class ArrayDequeTest {
     /* Utility method for printing out empty checks. */
     public static boolean checkEmpty(boolean expected, boolean actual) {
         if (expected != actual) {
-			System.out.println("isEmpty() returned " + actual + ", but expected: " + expected);return false;
+            System.out.println("isEmpty() returned " + actual + ", but expected: " + expected);return false;
         }
         return true;
     }
@@ -61,20 +61,18 @@ public class ArrayDequeTest {
 
         System.out.println("Running add/remove test.");
 
-        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
-        // should be empty
-        boolean passed = checkEmpty(true, lld1.isEmpty());
+        boolean passed = true;
+        for (int N = 3; N < 99; ++N) {
+            ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+            for (int i = 0; i < N; ++i) {
+                lld1.addLast(i);
+            }
 
-        for (int i = 0; i < 17; ++i) {
-            lld1.addLast(i);
+            int i = lld1.removeFirst();
+            int j = lld1.removeLast();
+            passed = checkSize(0, i) && passed;
+            passed = checkSize(N - 1, j) && passed;
         }
-        // should not be empty
-        passed = checkEmpty(false, lld1.isEmpty()) && passed;
-
-        int i = lld1.removeFirst();
-        int j = lld1.removeLast();
-        passed = checkSize(0, i);
-        passed = checkSize(16, j);
 
         printTestStatus(passed);
     }
@@ -99,11 +97,31 @@ public class ArrayDequeTest {
         printTestStatus(passed);
     }
 
+    public static void addFirstTest() {
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        System.out.println("Running addFirst test.");
+        boolean passed = checkEmpty(true, lld1.isEmpty());
+        for (int i = 0; i < 15; ++i) {
+            lld1.addFirst(i);
+        }
+        for (int i = 0; i < 15; ++i) {
+            System.out.printf("%d", lld1.get(i));
+            if (!checkSize(i, lld1.get(i))) {
+                passed = false;
+                break;
+            }
+        }
+
+        lld1.printDeque();
+        printTestStatus(passed);
+    }
+
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
         addIsEmptySizeTest();
         addRemoveTest();
         addInsertTest();
+        addFirstTest();
     }
 } 
 

@@ -30,7 +30,7 @@ public class ArrayDeque<T> {
             if (eleSize <= 15) {
                 int newSize = 15;
                 T[] newArray = (T[]) new Object[newSize];
-                for (; index != eleSize - 1; ptr = next(ptr)) {
+                for (; index != eleSize; ptr = next(ptr)) {
                     newArray[index] = array[ptr];
                     index++;
                 }
@@ -41,7 +41,7 @@ public class ArrayDeque<T> {
             } else {
                 int newSize = size / 2;
                 T[] newArray = (T[]) new Object[size / 2];
-                for (; index != eleSize - 1; ptr = next(ptr)) {
+                for (; index != eleSize; ptr = next(ptr)) {
                     newArray[index] = array[ptr];
                     index++;
                 }
@@ -53,10 +53,10 @@ public class ArrayDeque<T> {
         } else { /* allocate more space for array */
             int newSize = size * 2;
             T[] newArray = (T[]) new Object[newSize];
-            int Index = 0;
-            for (; Index != eleSize - 1; ptr = next(ptr)) {
-                newArray[Index] = array[ptr];
-                Index++;
+            int index = 0;
+            for (; index != eleSize; ptr = next(ptr)) {
+                newArray[index] = array[ptr];
+                index++;
             }
             head = 0;
             end = eleSize;
@@ -114,7 +114,7 @@ public class ArrayDeque<T> {
     /*  Removes and returns the item at the front of the deque.
      If no such item exists, returns null. */
     public T removeFirst() {
-        if (size == 0) {
+        if (eleSize == 0) {
             return null;
         }
         T elem = array[head];
@@ -128,7 +128,7 @@ public class ArrayDeque<T> {
     /*  Removes and returns the item at the back of the deque.
      If no such item exists, returns null. */
     public T removeLast() {
-        if (size == 0) {
+        if (eleSize == 0) {
             return null;
         }
         T elem = array[prev(end)];
