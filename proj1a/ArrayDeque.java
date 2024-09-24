@@ -26,11 +26,13 @@ public class ArrayDeque<T> {
         int ptr = head;
         /* Shrink oversized array. eleSize remains the same */
         if (size >= 16 && eleSize < (size / 4)) {
+            int index = 0;
             if (eleSize <= 15) {
                 int newSize = 15;
                 T[] newArray = (T[]) new Object[newSize];
-                for (; ptr != end; ptr = next(ptr)) {
-                    newArray[(ptr - head) % 15] = array[ptr];
+                for (; index != eleSize - 1; ptr = next(ptr)) {
+                    newArray[index] = array[ptr];
+                    index++;
                 }
                 array = newArray;
                 head = 0;
@@ -39,8 +41,9 @@ public class ArrayDeque<T> {
             } else {
                 int newSize = size / 2;
                 T[] newArray = (T[]) new Object[size / 2];
-                for (; ptr != end; ptr = next(ptr)) {
-                    newArray[(ptr - head) % newSize] = array[ptr];
+                for (; index != eleSize - 1; ptr = next(ptr)) {
+                    newArray[index] = array[ptr];
+                    index++;
                 }
                 head = 0;
                 end = eleSize;
@@ -50,8 +53,10 @@ public class ArrayDeque<T> {
         } else { /* allocate more space for array */
             int newSize = size * 2;
             T[] newArray = (T[]) new Object[newSize];
-            for (; ptr != end; ptr = next(ptr)) {
-                newArray[(ptr - head) % newSize] = array[ptr];
+            int Index = 0;
+            for (; Index != eleSize - 1; ptr = next(ptr)) {
+                newArray[Index] = array[ptr];
+                Index++;
             }
             head = 0;
             end = eleSize;
